@@ -6,7 +6,7 @@
 /*   By: potero <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 16:28:45 by potero            #+#    #+#             */
-/*   Updated: 2022/03/01 12:59:25 by potero-d         ###   ########.fr       */
+/*   Updated: 2022/03/01 17:30:46 by potero-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		init_create(t_data *data);
 void		stop(t_data *data);
 /*Time*/
 size_t		get_time(void);
-void		do_time(size_t time_to);
+void		do_time(size_t time_to, t_data *data);
 /*Routine*/
 void		*routine(void *philo);
 void		exception(t_philo *philo);

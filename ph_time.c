@@ -6,7 +6,7 @@
 /*   By: potero-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 12:33:08 by potero-d          #+#    #+#             */
-/*   Updated: 2022/03/01 13:09:03 by potero-d         ###   ########.fr       */
+/*   Updated: 2022/03/01 17:31:03 by potero-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ size_t	get_time(void)
 	return ((tp.tv_sec * 1000) + (tp.tv_usec / 1000));
 }
 
-void	do_time(size_t time_to)
+void	do_time(size_t time_to, t_data *data)
 {
 	size_t	time0;
 	size_t	time1;
@@ -29,6 +29,8 @@ void	do_time(size_t time_to)
 	time1 = get_time();
 	while (time1 - time0 < time_to)
 	{
+		if (data->death == 0)
+			break ;
 		usleep(500);
 		time1 = get_time();
 	}

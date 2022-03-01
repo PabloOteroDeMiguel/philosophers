@@ -6,7 +6,7 @@
 /*   By: potero-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 12:34:31 by potero-d          #+#    #+#             */
-/*   Updated: 2022/03/01 13:30:11 by potero-d         ###   ########.fr       */
+/*   Updated: 2022/03/01 17:30:26 by potero-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	exception(t_philo *philo)
 			get_time() - philo->time, philo->name);
 	if (philo->dt->num_of_philo == 1)
 	{
-		do_time(philo->dt->time_to_die);
+		do_time(philo->dt->time_to_die, philo->dt);
 		pthread_mutex_unlock(&philo->dt->fork[philo->name - 1].fork_mutex);
 		pthread_mutex_unlock(&philo->dt->fork[philo->name].fork_mutex);
 		return ;
@@ -33,7 +33,7 @@ void	exception(t_philo *philo)
 		printf("%zu %d is eating\n",
 			get_time() - philo->time, philo->name);
 	philo->meals_need += 1;
-	do_time(philo->dt->time_to_eat);
+	do_time(philo->dt->time_to_eat, philo->dt);
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->dt->fork[0].fork_mutex);
 	pthread_mutex_unlock(&philo->dt->fork[philo->name - 1].fork_mutex);
@@ -98,7 +98,7 @@ void	normal(t_philo *philo)
 			get_time() - philo->time, philo->name);
 		philo->meals_need += 1;
 	}
-	do_time(philo->dt->time_to_eat);
+	do_time(philo->dt->time_to_eat, philo->dt);
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->dt->fork[philo->name - 1].fork_mutex);
 	pthread_mutex_unlock(&philo->dt->fork[philo->name].fork_mutex);
@@ -110,7 +110,7 @@ void	*routine(void *p)
 
 	philo = p;
 	if (philo->name % 2 == 0)
-		do_time(1);
+		do_time(1, philo->dt);
 	while (philo->dt->death != 0 && philo->dt->enough != 0)
 	{
 		pthread_mutex_lock(&philo->mutex_philo);
@@ -123,7 +123,7 @@ void	*routine(void *p)
 			&& philo->dt->num_of_philo != 1)
 			printf("%zu %d is sleeping\n",
 				get_time() - philo->time, philo->name);
-		do_time(philo->dt->time_to_sleep);
+		do_time(philo->dt->time_to_sleep, philo->dt);
 		if (philo->dt->death != 0 && philo->dt->enough != 0
 			&& philo->dt->num_of_philo != 1)
 			printf("%zu %d is thinking\n",
